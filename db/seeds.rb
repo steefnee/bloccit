@@ -24,3 +24,8 @@ include RandomData
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
+
+
+Post.find_or_create_by(title: "Unique Title", body: "Unique body")
+
+Comment.create_with(post_id: 151).find_or_create_by(body: "Unique Comment")
