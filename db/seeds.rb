@@ -1,7 +1,7 @@
 include RandomData
 
  # Create Posts
- 50.times do
+ 5.times do
  # #1
    Post.create!(
  # #2
@@ -13,7 +13,7 @@ include RandomData
 
  # Create Comments
  # #3
- 100.times do
+ 10.times do
    Comment.create!(
  # #4
      post: posts.sample,
@@ -24,3 +24,15 @@ include RandomData
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
+
+
+ 20.times do
+   Advertisement.create!(
+     title:  RandomData.random_sentence,
+     copy:   RandomData.random_paragraph,
+     price:  RandomData.random_number
+   )
+ end
+ advertisements = Advertisement.all
+ puts "Seed finished"
+ puts "#{Advertisement.count} ad created"
