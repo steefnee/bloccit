@@ -3,24 +3,27 @@ include RandomData
 
 RSpec.describe PostsController, type: :controller do
   let (:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph)}
-  describe "GET #index" do
+
+
+  describe "GET show" do
     it "returns http success" do
-      get :index
+# #16
+      get :show, {id: my_post.id}
       expect(response).to have_http_status(:success)
     end
+    it "renders the #show view" do
+# #17
+      get :show, {id: my_post.id}
+      expect(response).to render_template :show
+    end
 
-    it "assigns [my_post] to @posts" do
-      get :index
-      expect(assigns(:posts)).to eq([my_post])
+    it "assigns my_post to @post" do
+      get :show, {id: my_post.id}
+# #18
+      expect(assigns(:post)).to eq(my_post)
     end
   end
 
-  #  describe "GET show" do
-  #    it "returns http success" do
-  #      get :show
-  #      expect(response).to have_http_status(:success)
-  #    end
-  #  end
 
   describe "GET new" do
     it "returns http success" do
