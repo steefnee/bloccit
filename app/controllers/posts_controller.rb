@@ -70,8 +70,8 @@ end
   def authorize_user
     post = Post.find(params[:id])
 # #11
-    unless current_user == post.user || current_user.admin?
-      flash[:error] = "You must be an admin to do that."
+    unless current_user == post.user || current_user.admin? || current_user.moderator?
+      flash[:error] = "You must be an admin or moderator to do that."
       redirect_to [post.topic, post]
     end
   end
