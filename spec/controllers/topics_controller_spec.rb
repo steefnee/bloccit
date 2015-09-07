@@ -309,16 +309,16 @@ RSpec.describe TopicsController, type: :controller do
     end
 
     describe "GET new" do
-     it "returns http redirect" do
-       get :new
-       expect(response).to redirect_to(new_session_path)
-     end
+      it "returns http redirect" do
+        get :new
+        expect(response).to redirect_to(topics_path)
+      end
     end
 
     describe "POST create" do
      it "returns http redirect" do
        post :create, topic: {name: RandomData.random_sentence, description: RandomData.random_paragraph}
-       expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(topics_path)
      end
     end
 
@@ -364,6 +364,6 @@ RSpec.describe TopicsController, type: :controller do
         expect(response).to redirect_to my_topic
       end
     end
-
+end
 
 end
