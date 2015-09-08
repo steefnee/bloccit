@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906223121) do
+ActiveRecord::Schema.define(version: 20150908033037) do
 
   create_table "advertisements", force: :cascade do |t|
     t.string   "title"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20150906223121) do
     t.datetime "updated_at", null: false
     t.integer  "topic_id"
     t.integer  "user_id"
+    t.float    "rank"
   end
 
   add_index "posts", ["topic_id"], name: "index_posts_on_topic_id"
@@ -76,6 +77,31 @@ ActiveRecord::Schema.define(version: 20150906223121) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "rates", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "ratable_id"
+    t.string   "ratable_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "rates", ["ratable_type", "ratable_id"], name: "index_rates_on_ratable_type_and_ratable_id"
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer  "rate_id"
+    t.integer  "topic_id"
+    t.integer  "post_id"
+    t.integer  "ratable_id"
+    t.string   "ratable_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "ratings", ["post_id"], name: "index_ratings_on_post_id"
+  add_index "ratings", ["ratable_type", "ratable_id"], name: "index_ratings_on_ratable_type_and_ratable_id"
+  add_index "ratings", ["rate_id"], name: "index_ratings_on_rate_id"
+  add_index "ratings", ["topic_id"], name: "index_ratings_on_topic_id"
 
   create_table "sponsored_posts", force: :cascade do |t|
     t.string   "title"
@@ -104,5 +130,16 @@ ActiveRecord::Schema.define(version: 20150906223121) do
     t.datetime "updated_at",      null: false
     t.integer  "role"
   end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "value"
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "votes", ["post_id"], name: "index_votes_on_post_id"
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id"
 
 end
