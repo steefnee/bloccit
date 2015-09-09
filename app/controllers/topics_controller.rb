@@ -67,7 +67,7 @@ class TopicsController < ApplicationController
   end
 
   def authorize_user
-    unless current_user == current_user.moderator?  || current_user.admin? 
+    unless current_user.moderator?  || current_user.admin? 
     flash[:error] = "You must be an admin or moderator to do that."
     redirect_to topics_path
   end
