@@ -83,17 +83,18 @@ RSpec.describe Post, type: :model do
      end
    end
 
-   describe "create_vote callback" do
-     it "triggers create_vote on save" do
-       expect(vote).to receive(:create_vote).at_least(:once)
-       vote.save
+
+   describe "after_create callback" do
+     it "triggers after_create on save" do
+
+       expect(post).to receive(:after_create).at_least(:once)
+       post.save
      end
 
-     it "#create_vote should call update_rank on post " do
-       expect(post).to receive(:update_rank).at_least(:once)
-       vote.save
-     end
-   end
-
-  end
+    it "after_create should call create_vote on vote" do
+      expect(post).to receive(:create_vote).at_least(:once)
+      post.save
+    end
+    end
+end
 end
