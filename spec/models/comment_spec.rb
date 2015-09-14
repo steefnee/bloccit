@@ -14,10 +14,11 @@ RSpec.describe Comment, type: :model do
     it { should validate_presence_of(:body) }
     it { should validate_length_of(:body).is_at_least(5) }
 
+
       it "should respond to body" do
         expect(comment).to respond_to(:body)
       end
-    end
+
 
     describe "after_create" do
       before do
@@ -37,4 +38,5 @@ RSpec.describe Comment, type: :model do
         @another_comment.save
       end
     end
+end
 end
