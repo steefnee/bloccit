@@ -2,6 +2,7 @@ require 'rails_helper'
 include RandomData
 
 RSpec.describe Post, type: :model do
+  context "attributes" do
 
   let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
@@ -23,8 +24,6 @@ RSpec.describe Post, type: :model do
   it { should validate_length_of(:title).is_at_least(5) }
   it { should validate_length_of(:body).is_at_least(20) }
 
-     context "attributes" do
-
    # #2
        it "should respond to title" do
          expect(post).to respond_to(:title)
@@ -33,7 +32,7 @@ RSpec.describe Post, type: :model do
        it "should respond to body" do
          expect(post).to respond_to(:body)
        end
-     end
+
 
 
   describe "voting" do
@@ -42,6 +41,7 @@ RSpec.describe Post, type: :model do
       3.times { post.votes.create!(value: 1) }
       2.times { post.votes.create!(value: -1) }
     end
+
 
 # #6
     describe "#up_votes" do
@@ -83,7 +83,25 @@ RSpec.describe Post, type: :model do
        expect(post.rank).to eq (old_rank - 1)
      end
    end
+ end
 
+   describe "after_create" do
+
+     before do
+       @new_post = topic.posts.new(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+     end
+
+     it 'creates a favorite for the current user and post' do
+       post :create, { post_id: my_post.id }
+       expect(my_user.favorites.find_by_post_id(my_post.id)).not_to be_nil
+     end
+
+     it "sends an email to the creator of the post" do
+       expect(FavoriteMailer).to receive(:new_post).with(user, @new_post).and_return(double(deliver_now:true))
+
+       @new_post.save
+     end
+   end
 
   end
 end
