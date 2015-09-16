@@ -1,7 +1,6 @@
 <h1><%= @topic.name %>
-<%=@topic.rating %>
+  <%= @topic.rating.severity if @topic.rating %>
 </h1>
-
 
 
 
