@@ -37,8 +37,9 @@
 
 <div>
 <h2>Favorites</h2>
-<% @user.favorites.each do |favorite| %>
-<% if favorite = user.favorite_for(post) %>
-<%= link_to "#{post.title}", [post.topic, post] %>
-<% end %>
+  <% @topic.posts.each do |post| %>
+    <% if @user.favorite_for(post) == favorite %>
+    <%= link_to post.title, topic_post_path(@topic, post) %>
+    <% end %>
+  <%end%>
 </div>
