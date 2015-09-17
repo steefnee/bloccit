@@ -27,7 +27,7 @@
   <% else %>
 
   <h2>Posts</h2>
-  <%= render @user.posts %>
+    <%= render @user.posts %>
 
   <h2>Comments</h2>
   <%= render @user.comments %>
@@ -37,9 +37,6 @@
 
 <div>
 <h2>Favorites</h2>
-  <% @topic.posts.each do |post| %>
-    <% if @user.favorite_for(post) == favorite %>
-    <%= link_to post.title, topic_post_path(@topic, post) %>
-    <% end %>
-  <%end%>
+<%= render @favorite_posts %>
+
 </div>

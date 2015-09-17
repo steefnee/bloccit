@@ -11,7 +11,7 @@ class FavoritesController < ApplicationController
       flash[:notice] = "Post favorited."
     else
       flash[:error] = "Favoriting failed."
-  end
+    end
 
 # #13
   redirect_to [post.topic, post]
@@ -31,5 +31,7 @@ end
 
 def show
   @favorite = Favorite.find(params[:id])
+
+end
 
 end
