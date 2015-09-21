@@ -28,8 +28,9 @@ Rails.application.routes.draw do
    # #19
      namespace :api do
        namespace :v1 do
-         resources :users, only: [:index, :show]
+         resources :users, only: [:index, :show, :create, :update]
          resources :topics, only: [:index, :show]
+         resources :topics, except: [:edit, :new]
        end
      end
  end
