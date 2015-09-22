@@ -113,6 +113,27 @@ RSpec.describe Api::V1::TopicsController, type: :controller do
       end
     end
 
+    describe "POST create, for posts" do
+
+      before { post :create, topic_id: my_topic.id, post: {title: @new_post.title, body: @new_post.body} }
+
+      it "returns http success" do
+        expect(response).to have_http_status(:success)
+      end
+
+      it "returns json content type" do
+        expect(response.content_type).to eq 'application/json'
+      end
+
+# #17
+      it "creates a post with the correct attributes" do
+        hashed_json = JSON.parse(response.body)
+        expect(@new_post.title).to eq hashed_json["title"]
+        expect(@new_body.body).to eq hashed_json["body"]
+      end
+    end
+
+
   end
 
 end
